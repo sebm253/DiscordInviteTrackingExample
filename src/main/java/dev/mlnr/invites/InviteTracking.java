@@ -17,21 +17,21 @@ import java.util.stream.Collectors;
 
 public class InviteTracking extends ListenerAdapter
 {
-    private static final Map<String, WrappedInvite> INVITE_CACHE = new HashMap<>(); // initialize a Map for invites; key - a String, invite's code; value - WrappedInvite object to prevent storing jda entities
+    private final Map<String, WrappedInvite> inviteCache = new HashMap<>(); // initialize a Map for invites; key - a String, invite's code; value - WrappedInvite object to prevent storing jda entities
 
     @Override
     public void onGuildInviteCreate(@NotNull final GuildInviteCreateEvent event) // gets fired when an invite is created, lets cache it
     {
         final var code = event.getCode(); // get invite's code
         final var wrapped = new WrappedInvite(event.getInvite()); // create a WrappedInvite object for the invite
-        INVITE_CACHE.put(code, wrapped); // put code as a key and WrappedInvite object as a value into the map; cache
+        inviteCache.put(code, wrapped); // put code as a key and WrappedInvite object as a value into the map; cache
     }
 
     @Override
     public void onGuildInviteDelete(@NotNull final GuildInviteDeleteEvent event) // gets fired when an invite is deleted, lets uncache it
     {
         final var code = event.getCode(); // get invite's code
-        INVITE_CACHE.remove(code); // remove map entry based on deleted invite's code; uncache
+        inviteCache.remove(code); // remove map entry based on deleted invite's code; uncache
     }
 
     @Override
@@ -47,7 +47,7 @@ public class InviteTracking extends ListenerAdapter
 
         guild.retrieveInvites().queue(retrievedInvites -> // retrieve all guild's invites, makes a request; it's necessary to have MANAGE_SERVER permission
         {
-            final var storedInvitesForThisGuild = INVITE_CACHE.entrySet().stream() // stream map's entries
+            final var storedInvitesForThisGuild = inviteCache.entrySet().stream() // stream map's entries
                                                                          .filter(entry -> entry.getValue().getGuildId() == guildId) // filter entries and their values to only collect invites for this guild
                                                                          .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)); // collect into a new map
             for (final var retrievedInvite : retrievedInvites) // iterate through retrieved invites
@@ -82,7 +82,7 @@ public class InviteTracking extends ListenerAdapter
     public void onGuildLeave(@NotNull final GuildLeaveEvent event) // gets fired when your bot left a guild, uncache all invites for it
     {
         final var guildId = event.getGuild().getIdLong();
-        INVITE_CACHE.entrySet().removeIf(entry -> entry.getValue().getGuildId() == guildId); // remove entry from the map if its value's guild id is the one your bot has left
+        inviteCache.entrySet().removeIf(entry -> entry.getValue().getGuildId() == guildId); // remove entry from the map if its value's guild id is the one your bot has left
     }
 
     private void attemptInviteCaching(final Guild guild) // helper method to prevent duplicate code for GuildReadyEvent and GuildJoinEvent
@@ -91,6 +91,6 @@ public class InviteTracking extends ListenerAdapter
 
         if (selfMember.hasPermission(Permission.MANAGE_SERVER)) // check if your bot has MANAGE_SERVER permission to retrieve the invites
             guild.retrieveInvites().queue(retrievedInvites ->
-                    retrievedInvites.forEach(retrievedInvite -> INVITE_CACHE.put(retrievedInvite.getCode(), new WrappedInvite(retrievedInvite)))); // iterate through invites and store them
+                    retrievedInvites.forEach(retrievedInvite -> inviteCache.put(retrievedInvite.getCode(), new WrappedInvite(retrievedInvite)))); // iterate through invites and store them
     }
 }
