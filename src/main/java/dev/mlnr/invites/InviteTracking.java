@@ -23,7 +23,7 @@ public class InviteTracking extends ListenerAdapter
     public void onGuildInviteCreate(@NotNull final GuildInviteCreateEvent event) // gets fired when an invite is created, lets cache it
     {
         final var code = event.getCode(); // get invite's code
-        final var inviteData = new InviteData(event.getInvite()); // create a InviteData object for the invite
+        final var inviteData = new InviteData(event.getInvite()); // create an InviteData object for the invite
         inviteCache.put(code, inviteData); // put code as a key and InviteData object as a value into the map; cache
     }
 
