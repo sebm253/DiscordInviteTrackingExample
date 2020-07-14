@@ -15,7 +15,7 @@ public class Main
         {
             JDABuilder.create("token",
                     EnumSet.of(
-                            GUILD_MEMBERS, // required to receive GuildMemberJoinEvent
+                            GUILD_MEMBERS, // required to receive GuildMemberJoinEvent; privileged intent - you need to enable it in the application dashboard - https://discord.com/developers/applications/yourBotsId/bot
                             GUILD_INVITES // required to get GuildInviteCreateEvent and GuildInviteDeleteEvent, required to cache/uncache invites
                     ))
                     .addEventListeners(new InviteTracking()) // add InviteTracking class as a listener to receive events
