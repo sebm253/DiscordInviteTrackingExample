@@ -72,14 +72,14 @@ public class InviteTracking extends ListenerAdapter
     }
 
     @Override
-    public void onGuildJoin(@NotNull final GuildJoinEvent event) // gets fired when your bot joined a new guild, lets try to store the invites
+    public void onGuildJoin(@NotNull final GuildJoinEvent event) // gets fired when your bot joined a guild, lets try to store the invites
     {
         final var guild = event.getGuild();
         attemptInviteCaching(guild); // attempt to try guild's invites
     }
 
     @Override
-    public void onGuildLeave(@NotNull final GuildLeaveEvent event) // gets fired when your bot leaves a guild, uncache all invites for it
+    public void onGuildLeave(@NotNull final GuildLeaveEvent event) // gets fired when your bot left a guild, uncache all invites for it
     {
         final var guildId = event.getGuild().getIdLong();
         INVITE_CACHE.entrySet().removeIf(entry -> entry.getValue().getGuildId() == guildId); // remove entry from the map if its value's guild id is the one your bot has left
