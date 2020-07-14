@@ -42,7 +42,7 @@ public class InviteTracking extends ListenerAdapter
         final var user = event.getUser(); // get the user who joined
         final var selfMember = guild.getSelfMember(); // get your bot's member object for this guild
 
-        if (!selfMember.hasPermission(Permission.MANAGE_SERVER)) // check if your bot has MANAGE_SERVER, if it doesn't, return
+        if (!selfMember.hasPermission(Permission.MANAGE_SERVER) || user.isBot()) // check if your bot doesn't have MANAGE_SERVER permission and the user who joined is a bot, if either of those is true, return
             return;
 
         guild.retrieveInvites().queue(retrievedInvites -> // retrieve all guild's invites, makes a request; it's necessary to have MANAGE_SERVER permission
