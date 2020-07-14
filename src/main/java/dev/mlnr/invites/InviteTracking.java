@@ -48,7 +48,7 @@ public class InviteTracking extends ListenerAdapter
         guild.retrieveInvites().queue(retrievedInvites -> // retrieve all guild's invites, makes a request; it's necessary to have MANAGE_SERVER permission
         {
             final var storedInvitesForThisGuild = INVITE_CACHE.entrySet().stream() // stream map's entries
-                                                                         .filter(entry -> entry.getValue().getGuildId() == guildId)
+                                                                         .filter(entry -> entry.getValue().getGuildId() == guildId) // filter entries and their values to only collect invites for this guild
                                                                          .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)); // collect into a new map
             for (final var retrievedInvite : retrievedInvites) // iterate through retrieved invites
             {
