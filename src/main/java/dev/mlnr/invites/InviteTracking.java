@@ -85,7 +85,7 @@ public class InviteTracking extends ListenerAdapter
         INVITE_CACHE.entrySet().removeIf(entry -> entry.getValue().getGuildId() == guildId); // remove entry from the map if its value's guild id is the one your bot has left
     }
 
-    private void attemptInviteCaching(final Guild guild) // helper method to prevent duplicate for GuildReadyEvent and GuildJoinEvent
+    private void attemptInviteCaching(final Guild guild) // helper method to prevent duplicate code for GuildReadyEvent and GuildJoinEvent
     {
         final var selfMember = guild.getSelfMember();
 
