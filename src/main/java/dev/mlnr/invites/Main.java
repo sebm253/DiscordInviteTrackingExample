@@ -24,7 +24,7 @@ public class Main
         }
         catch (final Exception ex)
         {
-            System.out.println("An error occured: " + ex.getMessage()); // would be better to replace this with a proper logger but i'll keep it like this for the sake of simplicity
+            System.out.println("An error occurred: " + ex.getMessage()); // would be better to replace this with a proper logger but i'll keep it like this for the sake of simplicity
         }
     }
 }
