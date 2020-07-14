@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+}
+
+application {
+    mainClassName = 'dev.mlnr.invites.Main'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation("net.dv8tion:JDA:4.2.0_178") { // add JDA as a dependency
+        exclude group: 'club.minnced', module: 'opus-java' // exclude audio
+    }
+}
+
+group = 'dev.mlnr'
+description = 'InviteTracking'
+
+compileJava.options.encoding = 'UTF-8'
