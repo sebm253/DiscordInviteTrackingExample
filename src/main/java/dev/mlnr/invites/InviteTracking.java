@@ -68,14 +68,14 @@ public class InviteTracking extends ListenerAdapter
     public void onGuildReady(@NotNull final GuildReadyEvent event) // gets fired when a guild gets cached, lets try to cache its invites
     {
         final var guild = event.getGuild();
-        attemptInviteCaching(guild); // attempt to try guild's invites
+        attemptInviteCaching(guild); // attempt to store guild's invites
     }
 
     @Override
     public void onGuildJoin(@NotNull final GuildJoinEvent event) // gets fired when your bot joined a guild, lets try to store the invites
     {
         final var guild = event.getGuild();
-        attemptInviteCaching(guild); // attempt to try guild's invites
+        attemptInviteCaching(guild); // attempt to store guild's invites
     }
 
     @Override
