@@ -91,6 +91,6 @@ public class InviteTracking extends ListenerAdapter
 
         if (selfMember.hasPermission(Permission.MANAGE_SERVER)) // check if your bot has MANAGE_SERVER permission to retrieve the invites
             guild.retrieveInvites().queue(retrievedInvites ->
-                    retrievedInvites.forEach(retrievedInvite -> inviteCache.put(retrievedInvite.getCode(), new InviteData(retrievedInvite)))); // iterate through invites and store them
+                  retrievedInvites.forEach(retrievedInvite -> inviteCache.put(retrievedInvite.getCode(), new InviteData(retrievedInvite)))); // iterate through invites and store them
     }
 }
