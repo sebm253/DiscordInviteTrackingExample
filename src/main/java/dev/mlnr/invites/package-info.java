@@ -1,7 +1,7 @@
 /**
  * This is where the magic happens.
  *
- * The package contains 2 classes and one inner class:
+ * The package contains 3 classes:
  * <ul>
  *     <li>{@link dev.mlnr.invites.InviteData InviteData}
  *     <br>Used to contain invite's guild id and invite's usage count</li>
