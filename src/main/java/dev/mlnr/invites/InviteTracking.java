@@ -2,7 +2,6 @@ package dev.mlnr.invites;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
@@ -93,32 +92,5 @@ public class InviteTracking extends ListenerAdapter
         if (selfMember.hasPermission(Permission.MANAGE_SERVER)) // check if your bot has MANAGE_SERVER permission to retrieve the invites
             guild.retrieveInvites().queue(retrievedInvites ->
                   retrievedInvites.forEach(retrievedInvite -> inviteCache.put(retrievedInvite.getCode(), new InviteData(retrievedInvite)))); // iterate through invites and store them
-    }
-
-    public static class InviteData // this object is useful to prevent storing jda entities - check https://github.com/DV8FromTheWorld/JDA#entity-lifetimes
-    {
-        private final long guildId; // store guild's id
-        private int uses; // store invite's usage count
-
-        public InviteData(final Invite invite)
-        {
-            this.guildId = invite.getGuild().getIdLong();
-            this.uses = invite.getUses();
-        }
-
-        public long getGuildId()
-        {
-            return guildId;
-        }
-
-        public int getUses()
-        {
-            return uses;
-        }
-
-        public void incrementUses() // increment stored invite's usage count
-        {
-            this.uses++;
-        }
     }
 }
