@@ -12,13 +12,13 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class InviteTracking extends ListenerAdapter
 {
-    private final Map<String, InviteData> inviteCache = new HashMap<>(); // initialize a Map for invites; key - a String, invite's code; value - InviteData object to prevent storing jda entities
+    private final Map<String, InviteData> inviteCache = new ConcurrentHashMap<>(); // initialize a thread safe Map for invites; key - a String, invite's code; value - InviteData object to prevent storing jda entities
 
     @Override
     public void onGuildInviteCreate(@NotNull final GuildInviteCreateEvent event) // gets fired when an invite is created, lets cache it
