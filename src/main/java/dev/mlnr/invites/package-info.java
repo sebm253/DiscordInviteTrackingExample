@@ -1,7 +1,7 @@
 /**
  * This is where the magic happens.
  *
- * The package contains 3 classes:
+ * The package contains 2 classes and one inner class:
  * <ul>
  *     <li>{@link dev.mlnr.invites.InviteTracking InviteTracking}
  *     <br>Used to listen to events and cache/uncache invites</li>
