@@ -65,7 +65,7 @@ public class InviteTracking extends ListenerAdapter
                     final String url = retrievedInvite.getUrl();                                      // get invite's url
                     final String inviterTag = retrievedInvite.getInviter().getAsTag();                // get inviter's tag (inviter = the user that created the invite)
                     final String toLog = String.format(pattern, tag, url, inviterTag);                // format the pattern with variables
-                    System.out.println(toLog);                                                        // print info about the user, invite link they probably used and the inviter)
+                    System.out.println(toLog);                                                        // print info about the user, invite link they probably used and the inviter
                     break;                                                                            // we most likely found the correct invite, stop iterating
                 }
             }
