@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class InviteTracking extends ListenerAdapter
 {
@@ -41,7 +40,6 @@ public class InviteTracking extends ListenerAdapter
     public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event)                          // gets fired when a member joined, lets try to get the invite the member used
     {
         final Guild guild = event.getGuild();                                                         // get the guild a member joined to
-        final long guildId = guild.getIdLong();                                                       // get guild's id to filter cached invites by it
         final User user = event.getUser();                                                            // get the user who joined
         final Member selfMember = guild.getSelfMember();                                              // get your bot's member object for this guild
 
@@ -50,13 +48,10 @@ public class InviteTracking extends ListenerAdapter
 
         guild.retrieveInvites().queue(retrievedInvites ->                                             // retrieve all guild's invites, makes a request; it's necessary to have MANAGE_SERVER permission
         {
-            final Map<String, InviteData> storedInvitesForThisGuild = inviteCache.entrySet().stream() // stream map's entries
-                    .filter(entry -> entry.getValue().getGuildId() == guildId)                        // filter entries and their values to only collect invites for this guild
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));               // collect into a new map
             for (final Invite retrievedInvite : retrievedInvites)                                     // iterate through retrieved invites
             {
                 final String code = retrievedInvite.getCode();                                        // get currently iterated Invite's code
-                final InviteData cachedInvite = storedInvitesForThisGuild.get(code);                  // get InviteData object for this invite
+                final InviteData cachedInvite = inviteCache.get(code);                                // get InviteData object for this invite
                 if (retrievedInvite.getUses() > cachedInvite.getUses())                               // check if retrieved invite's usage count is bigger than the cached one's
                 {
                     cachedInvite.incrementUses();                                                     // increment cached invite's usage count
