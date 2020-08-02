@@ -52,6 +52,8 @@ public class InviteTracking extends ListenerAdapter
             {
                 final String code = retrievedInvite.getCode();                                        // get currently iterated Invite's code
                 final InviteData cachedInvite = inviteCache.get(code);                                // get InviteData object for this invite
+                if (cachedInvite == null)                                                             // check for invites that are not in cache, probably one-use invites
+                    return;
                 if (retrievedInvite.getUses() > cachedInvite.getUses())                               // check if retrieved invite's usage count is bigger than the cached one's
                 {
                     cachedInvite.incrementUses();                                                     // increment cached invite's usage count
