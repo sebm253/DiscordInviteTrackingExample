@@ -98,8 +98,8 @@ public class InviteTracking extends ListenerAdapter
         {
             guild.retrieveInvites().queue(retrievedInvites ->
             {
-                retrievedInvites.forEach(retrievedInvite ->
-                    inviteCache.put(retrievedInvite.getCode(), new InviteData(retrievedInvite)));     // iterate through invites and store them
+                retrievedInvites.forEach(retrievedInvite ->                                           // iterate over invites..
+                    inviteCache.put(retrievedInvite.getCode(), new InviteData(retrievedInvite)));     // and store them
             });
         }
     }
