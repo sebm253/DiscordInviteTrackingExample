@@ -2,8 +2,6 @@ package dev.mlnr.invites;
 
 import net.dv8tion.jda.api.JDABuilder;
 
-import java.util.EnumSet;
-
 import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_INVITES;
 import static net.dv8tion.jda.api.requests.GatewayIntent.GUILD_MEMBERS;
 
@@ -13,11 +11,10 @@ public class Main
     {
         try
         {
-            JDABuilder.create("token",
-                    EnumSet.of(
-                            GUILD_MEMBERS,                               // required to receive GuildMemberJoinEvent; privileged intent - you need to enable it in the application dashboard - https://discord.com/developers/applications/yourBotsId/bot
-                            GUILD_INVITES                                // required to receive GuildInviteCreateEvent and GuildInviteDeleteEvent, required to cache/uncache invites
-                    ))
+            JDABuilder.createDefault("token",
+                        GUILD_MEMBERS,                                   // required to receive GuildMemberJoinEvent; privileged intent - you need to enable it in the application dashboard - https://discord.com/developers/applications/yourBotsId/bot
+                        GUILD_INVITES                                    // required to receive GuildInviteCreateEvent and GuildInviteDeleteEvent, required to cache/uncache invites
+                    )
                     .addEventListeners(new InviteTracking())             // add InviteTracking class as a listener to receive events
                     .build()
                     .awaitReady();                                       // block the thread until jda is ready

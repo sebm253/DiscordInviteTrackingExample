@@ -20,6 +20,7 @@ public class InviteTracking extends ListenerAdapter
 {
     private final Map<String, InviteData> inviteCache = new ConcurrentHashMap<>();                    // initialize a thread safe Map for invites; key - a String, invite's code; value - InviteData object to prevent storing jda entities
 
+    // keep in mind that invite events will only fire for channels in which your bot has MANAGE_CHANNEL perm
     @Override
     public void onGuildInviteCreate(final GuildInviteCreateEvent event)                               // gets fired when an invite is created, lets cache it
     {
