@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:4.2.0_214") {          // add JDA as a dependency; always keep jda up-to-date
+    implementation("net.dv8tion:JDA:4.2.0_223") {          // add JDA as a dependency; always keep jda up-to-date
         exclude group: 'club.minnced', module: 'opus-java' // exclude audio (as we don't need it in this example repo)
     }
 }

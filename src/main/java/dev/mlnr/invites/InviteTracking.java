@@ -20,7 +20,7 @@ public class InviteTracking extends ListenerAdapter
 {
     private final Map<String, InviteData> inviteCache = new ConcurrentHashMap<>();                    // initialize a thread safe Map for invites; key - a String, invite's code; value - InviteData object to prevent storing jda entities
 
-    // keep in mind that invite events will only fire for channels in which your bot has MANAGE_CHANNEL perm
+    // keep in mind that invite events will only fire for channels which your bot has MANAGE_CHANNEL perm in
     @Override
     public void onGuildInviteCreate(final GuildInviteCreateEvent event)                               // gets fired when an invite is created, lets cache it
     {
@@ -37,7 +37,7 @@ public class InviteTracking extends ListenerAdapter
     }
 
     @Override
-    public void onGuildMemberJoin(final GuildMemberJoinEvent event)                                   // gets fired when a member joined, lets try to get the invite the member used
+    public void onGuildMemberJoin(final GuildMemberJoinEvent event)                                   // gets fired when a member has joined, lets try to get the invite the member used
     {
         final Guild guild = event.getGuild();                                                         // get the guild a member joined to
         final User user = event.getUser();                                                            // get the user who joined
@@ -58,34 +58,34 @@ public class InviteTracking extends ListenerAdapter
                     continue;
                 cachedInvite.incrementUses();                                                         // increment cached invite's usage count
                 final String pattern = "User %s used invite with url %s, created by %s to join.";     // create a "pattern" for the string to print
-                final String tag = user.getAsTag();                                                   // get user's tag, as like Name#Discriminator, eg /home/canelex_#6666
+                final String tag = user.getAsTag();                                                   // get user's tag, as like Name#Discriminator, eg cane#6666
                 final String url = retrievedInvite.getUrl();                                          // get invite's url
-                final String inviterTag = retrievedInvite.getInviter().getAsTag();                    // get inviter's tag (inviter = the user that created the invite)
+                final String inviterTag = retrievedInvite.getInviter().getAsTag();                    // get inviter's tag (inviter = the user that has created the invite)
                 final String toLog = String.format(pattern, tag, url, inviterTag);                    // format the pattern with variables
-                System.out.println(toLog);                                                            // print info about the user, invite link they probably used and the inviter
-                break;                                                                                // we most likely found the correct invite, stop iterating
+                System.out.println(toLog);                                                            // print info about the user, invite link they probably used and the user who has created the invite
+                break;                                                                                // we have most likely found the correct invite, stop iterating
             }
         });
     }
 
     @Override
-    public void onGuildReady(final GuildReadyEvent event)                                             // gets fired when a guild gets cached, lets try to cache its invites
+    public void onGuildReady(final GuildReadyEvent event)                                             // gets fired when a guild has finished setting up upon booting the bot, lets try to cache its invites
     {
-        final Guild guild = event.getGuild();                                                         // get the guild that finished setting up
+        final Guild guild = event.getGuild();                                                         // get the guild that has finished setting up
         attemptInviteCaching(guild);                                                                  // attempt to store guild's invites
     }
 
     @Override
-    public void onGuildJoin(final GuildJoinEvent event)                                               // gets fired when your bot joined a guild, lets try to store its invites
+    public void onGuildJoin(final GuildJoinEvent event)                                               // gets fired when your bot has joined a guild, lets try to store its invites
     {
-        final Guild guild = event.getGuild();                                                         // get the guild that finished setting up
+        final Guild guild = event.getGuild();                                                         // get the guild your bot has joined
         attemptInviteCaching(guild);                                                                  // attempt to store guild's invites
     }
 
     @Override
-    public void onGuildLeave(final GuildLeaveEvent event)                                             // gets fired when your bot left a guild, uncache all invites for it
+    public void onGuildLeave(final GuildLeaveEvent event)                                             // gets fired when your bot has left a guild, uncache all invites for it
     {
-        final long guildId = event.getGuild().getIdLong();                                            // get the id of the guild your bot left
+        final long guildId = event.getGuild().getIdLong();                                            // get the id of the guild your bot has left
         inviteCache.entrySet().removeIf(entry -> entry.getValue().getGuildId() == guildId);           // remove entry from the map if its value's guild id is the one your bot has left
     }
 
