@@ -58,7 +58,7 @@ public class InviteTracking extends ListenerAdapter
                     continue;
                 cachedInvite.incrementUses();                                                         // increment cached invite's usage count
                 final String pattern = "User %s used invite with url %s, created by %s to join.";     // create a "pattern" for the string to print
-                final String tag = user.getAsTag();                                                   // get user's tag, as like Name#Discriminator, eg cane#6666
+                final String tag = user.getAsTag();                                                   // get user's tag, as like Name#Discriminator, eg cane#0570
                 final String url = retrievedInvite.getUrl();                                          // get invite's url
                 final String inviterTag = retrievedInvite.getInviter().getAsTag();                    // get inviter's tag (inviter = the user that has created the invite)
                 final String toLog = String.format(pattern, tag, url, inviterTag);                    // format the pattern with variables
